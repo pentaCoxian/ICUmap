@@ -1,0 +1,47 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "本館"
+        },
+        "geometry": {
+          "coordinates": [
+            139.52967588488048,
+            35.68751060591862
+          ],
+          "type": "Point"
+        },
+        "id": 0
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "新D館"
+        },
+        "geometry": {
+          "coordinates": [
+            139.5292055238594,
+            35.68637033334039
+          ],
+          "type": "Point"
+        },
+        "id": 1
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "旧D館"
+        },
+        "geometry": {
+          "coordinates": [
+            139.529787191634,
+            35.686049537693805
+          ],
+          "type": "Point"
+        },
+        "id": 2
+      }
+    ]
+  }

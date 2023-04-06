@@ -1,0 +1,8 @@
+.ol-layerswitcher-popup>button {
+    display: none;
+}
+
+.ol-layerswitcher-popup{
+    border-color: black;
+    border-width: 2px;
+}
