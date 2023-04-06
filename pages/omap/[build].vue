@@ -1,6 +1,12 @@
 <template>
-    <div class="grow mt-0 mb-4">
+    <div class="grow mt-0 sm:mb-4 mb-0">
         <div class="container mx-auto h-full" ref="rootE1">
+            <div id="toast-simple"
+                class="flex z-50 fixed left-1/2 -translate-x-1/2 top-20 items-center justify-center w-full max-w-fit sm:p-4 px-4 py-2 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg drop-shadow-2xl space-x "
+                role="alert">
+                
+                <NuxtLink to="/omap"><div class="sm:text-base text-sm font-light text-blue-500 font-normal">Go Back To Home</div> </NuxtLink>
+            </div>
             <div id="map" class="h-full grow border-black border-2"></div>
         </div>
     </div>
@@ -102,8 +108,6 @@ const startPos = {
 
 const route = useRoute();
 const centerArr = startPos[`${route.params.build}`];
-console.log(route.params.build)
-console.log(centerArr)
 
 const layer = gsiOptVtLayer({
     title: '1F',
@@ -134,7 +138,7 @@ const layer4 = gsiOptVtLayer({
 function textStyleFunction(feature) {
     return new Style({
         image: new CircleStyle({
-            radius: 20,
+            radius: 19,
             fill: new Fill({ color: 'rgba(255, 0, 0, 0)' }),
             stroke: new Stroke({ color: 'rgba(255, 0, 0, 0)', width: 1 }),
         }),
@@ -185,7 +189,7 @@ useSafeOnMounted(rootE1, () => {
         target: 'map',
         view: new View({
             center: fromLonLat(centerArr),
-            zoom: 18,
+            zoom: 20,
             rotation: 0,
         }),
         moveTolerance: 3.0,

@@ -142,10 +142,10 @@ useSafeOnMounted(rootE1, () => {
     router.push(`/omap/${e.element.values_.link}`);
   })
 
-  var layerPopup = new $LayerPopup({
-    collapsed: false
-  });
-  map.addControl(layerPopup);
+  // var layerPopup = new $LayerPopup({
+  //   collapsed: false
+  // });
+  // map.addControl(layerPopup);
 
 });
 
