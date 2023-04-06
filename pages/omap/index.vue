@@ -15,7 +15,7 @@ import GeoJSON from 'ol/format/GeoJSON.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text, Icon } from 'ol/style.js';
 import { fromLonLat } from 'ol/proj';
 import { Point } from 'ol/geom';
-import {Select} from 'ol/interaction'
+import { Select } from 'ol/interaction'
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Attribution, ScaleLine, defaults as defaultControl } from 'ol/control';
 import { gsiOptVtLayer, gsiOptVtLayerExclude } from '@cieloazul310/ol-gsi-vt';
@@ -58,20 +58,20 @@ const layer4 = gsiOptVtLayer({
 });
 
 // Polygons
-function polygonStyleFunction(feature) {
+function textStyleFunction(feature) {
   return new Style({
     image: new CircleStyle({
       radius: 20,
-      fill: new Fill({color: 'rgba(255, 0, 0, 0)'}),
-      stroke: new Stroke({color: 'rgba(255, 0, 0, 0)', width: 1}),
+      fill: new Fill({ color: 'rgba(255, 0, 0, 0)' }),
+      stroke: new Stroke({ color: 'rgba(255, 0, 0, 0)', width: 1 }),
     }),
     text: createTextStyle(feature),
   });
 }
 
-const createTextStyle = function(feature){
+const createTextStyle = function (feature) {
   return new Text(
-    {text: feature.get('name'),scale:1.5}
+    { text: feature.get('name'), scale: 1.5 }
   )
 }
 
@@ -80,9 +80,31 @@ const l3 = new VectorLayer({
     url: '/point.geojson',
     format: new GeoJSON(),
   }),
-  style: polygonStyleFunction,
-  displayInLayerSwitcher:false,
+  style: textStyleFunction,
+  displayInLayerSwitcher: false,
 });
+
+// Polygons
+function polygonStyleFunction(feature, resolution) {
+  return new Style({
+    stroke: new Stroke({
+      color: 'blue',
+      width: 1,
+    }),
+    fill: new Fill({
+      color: 'rgba(0, 0, 255, 0.1)',
+    }),
+  });
+}
+
+const vectorPolygons = new VectorLayer({
+  source: new VectorSource({
+    url: '/poly.geojson',
+    format: new GeoJSON(),
+  }),
+  style: polygonStyleFunction,
+});
+
 
 useSafeOnMounted(rootE1, () => {
 
@@ -93,8 +115,8 @@ useSafeOnMounted(rootE1, () => {
       zoom: 18,
       rotation: 0,
     }),
-    moveTolerance:3.0,
-    layers: [layer4,layer3,layer2, layer],
+    moveTolerance: 3.0,
+    layers: [layer4, layer3, layer2, layer],
     controls: defaultControl({
       attribution: false,
     }).extend([
@@ -104,13 +126,17 @@ useSafeOnMounted(rootE1, () => {
     ]),
   });
 
+
   map.addLayer(l3);
- 
+  map.addLayer(vectorPolygons);
+
   var select = new Select({});
   map.addInteraction(select);
+  const router = useRouter();
 
   select.getFeatures().on(['add'], function(e) {
     console.log(e.element.values_.name);
+    router.push(`/omap/${e.element.values_.link}`);
   })
 
   var layerPopup = new $LayerPopup({

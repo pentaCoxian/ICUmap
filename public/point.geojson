@@ -1,47 +1,260 @@
 {
     "type": "FeatureCollection",
     "features": [
-      {
-        "type": "Feature",
-        "properties": {
-          "name": "本館"
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "本館",
+                "link": "honkan"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.52967588488048,
+                    35.68751060591862
+                ],
+                "type": "Point"
+            },
+            "id": 0
         },
-        "geometry": {
-          "coordinates": [
-            139.52967588488048,
-            35.68751060591862
-          ],
-          "type": "Point"
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "旧D館",
+                "link": "old-d"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.529787191634,
+                    35.686049537693805
+                ],
+                "type": "Point"
+            },
+            "id": 1
         },
-        "id": 0
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "name": "新D館"
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "新D館",
+                "link": "new-d"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.52929528743374,
+                    35.686344086485505
+                ],
+                "type": "Point"
+            },
+            "id": 2
         },
-        "geometry": {
-          "coordinates": [
-            139.5292055238594,
-            35.68637033334039
-          ],
-          "type": "Point"
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ワーショ",
+                "link": "workshop"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.5289577765497,
+                    35.686449073912044
+                ],
+                "type": "Point"
+            },
+            "id": 3
         },
-        "id": 1
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "name": "旧D館"
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "図書館",
+                "link": "lib"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53089833940336,
+                    35.68686672737103
+                ],
+                "type": "Point"
+            },
+            "id": 4
         },
-        "geometry": {
-          "coordinates": [
-            139.529787191634,
-            35.686049537693805
-          ],
-          "type": "Point"
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "理学館",
+                "link": "Sci"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.52918576856467,
+                    35.688418755377995
+                ],
+                "type": "Point"
+            },
+            "id": 5
         },
-        "id": 2
-      }
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ILC",
+                "link": "ilc"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53027217893583,
+                    35.6883379593813
+                ],
+                "type": "Point"
+            },
+            "id": 6
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ERB II",
+                "link": "erb-2"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53031504002382,
+                    35.68890393432156
+                ],
+                "type": "Point"
+            },
+            "id": 7
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "湯島八郎記念館",
+                "link": "yushima"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53105159419914,
+                    35.68873491574098
+                ],
+                "type": "Point"
+            },
+            "id": 8
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ERB",
+                "link": "erb-1"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53092761908522,
+                    35.68763017777832
+                ],
+                "type": "Point"
+            },
+            "id": 9
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "食堂",
+                "link": "gakki"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.52958967686504,
+                    35.68541792455619
+                ],
+                "type": "Point"
+            },
+            "id": 10
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "ICU教会",
+                "link": "chapel"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53033792823675,
+                    35.68585256782036
+                ],
+                "type": "Point"
+            },
+            "id": 11
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "本部棟",
+                "link": "adb"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53229988004696,
+                    35.6868085585538
+                ],
+                "type": "Point"
+            },
+            "id": 12
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "体育館",
+                "link": "pe"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53239152516062,
+                    35.6856981191544
+                ],
+                "type": "Point"
+            },
+            "id": 13
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "sports clubhouse",
+                "link": "sports"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53291067048764,
+                    35.68549626685625
+                ],
+                "type": "Point"
+            },
+            "id": 14
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "アラムナイハウス",
+                "link": "alumni"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53213387533236,
+                    35.68763871226058
+                ],
+                "type": "Point"
+            },
+            "id": 15
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "たぶんここらへんにトロ館",
+                "link": "troy"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.52868452541992,
+                    35.68800269131255
+                ],
+                "type": "Point"
+            },
+            "id": 17
+        }
     ]
-  }
+}
