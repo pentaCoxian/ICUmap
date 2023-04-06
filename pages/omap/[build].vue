@@ -1,151 +1,226 @@
 <template>
     <div class="grow mt-0 mb-4">
-      <div class="container mx-auto h-full" ref="rootE1">
-        <div id="map" class="h-full grow border-black border-2"></div>
-      </div>
+        <div class="container mx-auto h-full" ref="rootE1">
+            <div id="map" class="h-full grow border-black border-2"></div>
+        </div>
     </div>
-  </template>
+</template>
   
-  <script setup>
-  import Map from 'ol/Map';
-  import View from 'ol/View';
-  import Feature from 'ol/Feature';
-  import { OSM, Vector as VectorSource } from 'ol/source.js';
-  import GeoJSON from 'ol/format/GeoJSON.js';
-  import { Circle as CircleStyle, Fill, Stroke, Style, Text, Icon } from 'ol/style.js';
-  import { fromLonLat } from 'ol/proj';
-  import { Point } from 'ol/geom';
-  import { Select } from 'ol/interaction'
-  import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
-  import { Attribution, ScaleLine, defaults as defaultControl } from 'ol/control';
-  import { gsiOptVtLayer, gsiOptVtLayerExclude } from '@cieloazul310/ol-gsi-vt';
-  import '../../styles/ol.css';
-  import '../../styles/ol-ext.css';
-  import '../../styles/switcher.css';
-  import optVtLayer from '~/composables/gsi-opt-vt';
-  //import LayerSwitcher from 'ol-ext/control/LayerSwitcher';
-  
-  const { $LayerPopup } = useNuxtApp();
-  const { $Popup } = useNuxtApp();
-  const rootE1 = ref();
-  
-  
-  
-  
-  const layer = gsiOptVtLayer({
+<script setup>
+import Map from 'ol/Map';
+import View from 'ol/View';
+import Feature from 'ol/Feature';
+import { OSM, Vector as VectorSource } from 'ol/source.js';
+import GeoJSON from 'ol/format/GeoJSON.js';
+import { Circle as CircleStyle, Fill, Stroke, Style, Text, Icon } from 'ol/style.js';
+import { fromLonLat } from 'ol/proj';
+import { Point } from 'ol/geom';
+import { Select } from 'ol/interaction'
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
+import { Attribution, ScaleLine, defaults as defaultControl } from 'ol/control';
+import { gsiOptVtLayer, gsiOptVtLayerExclude } from '@cieloazul310/ol-gsi-vt';
+import '../../styles/ol.css';
+import '../../styles/ol-ext.css';
+import '../../styles/switcher.css';
+import optVtLayer from '~/composables/gsi-opt-vt';
+//import LayerSwitcher from 'ol-ext/control/LayerSwitcher';
+
+const { $LayerPopup } = useNuxtApp();
+const { $Popup } = useNuxtApp();
+const rootE1 = ref();
+
+const startPos = {
+    'honkan': [
+        139.52967588488048,
+        35.68751060591862
+    ],
+    'old-d': [
+        139.529787191634,
+        35.686049537693805
+    ],
+    'new-d': [
+        139.52929528743374,
+        35.686344086485505
+    ],
+    'workshop': [
+        139.5289577765497,
+        35.686449073912044
+    ],
+    'lib': [
+        139.53089833940336,
+        35.68686672737103
+    ],
+    'sci': [
+        139.52918576856467,
+        35.688418755377995
+    ],
+    'ilc': [
+        139.53027217893583,
+        35.6883379593813
+    ],
+    'erb-2': [
+        139.53031504002382,
+        35.68890393432156
+    ],
+    'yushima': [
+        139.53105159419914,
+        35.68873491574098
+    ],
+    'erb-1': [
+        139.53092761908522,
+        35.68763017777832
+    ],
+    'gakki': [
+        139.52958967686504,
+        35.68541792455619
+    ],
+    'chapel': [
+        139.53033792823675,
+        35.68585256782036
+    ],
+    'adb': [
+        139.53229988004696,
+        35.6868085585538
+    ],
+    'pe': [
+        139.53239152516062,
+        35.6856981191544
+    ],
+    'sports': [
+        139.53291067048764,
+        35.68549626685625
+    ],
+    'alumni': [
+        139.53213387533236,
+        35.68763871226058
+    ],
+    'troy': [
+        139.52868452541992,
+        35.68800269131255
+    ],
+}
+
+const route = useRoute();
+const centerArr = startPos[`${route.params.build}`];
+console.log(route.params.build)
+console.log(centerArr)
+
+const layer = gsiOptVtLayer({
     title: '1F',
     layers: gsiOptVtLayerExclude(['Anno']),
     visible: true,
     baseLayer: true
-  });
-  const layer2 = gsiOptVtLayer({
+});
+const layer2 = gsiOptVtLayer({
     title: '2F',
     layers: ['RdCL'],
     visible: false,
     baseLayer: true
-  });
-  const layer3 = gsiOptVtLayer({
+});
+const layer3 = gsiOptVtLayer({
     title: '3F',
     layers: gsiOptVtLayerExclude(['Anno']),
     visible: false,
     baseLayer: true
-  });
-  const layer4 = gsiOptVtLayer({
+});
+const layer4 = gsiOptVtLayer({
     title: '4F',
     layers: gsiOptVtLayerExclude(['Anno']),
     visible: false,
     baseLayer: true
-  });
-  
-  // Polygons
-  function textStyleFunction(feature) {
+});
+
+// Polygons
+function textStyleFunction(feature) {
     return new Style({
-      image: new CircleStyle({
-        radius: 20,
-        fill: new Fill({ color: 'rgba(255, 0, 0, 0)' }),
-        stroke: new Stroke({ color: 'rgba(255, 0, 0, 0)', width: 1 }),
-      }),
-      text: createTextStyle(feature),
+        image: new CircleStyle({
+            radius: 20,
+            fill: new Fill({ color: 'rgba(255, 0, 0, 0)' }),
+            stroke: new Stroke({ color: 'rgba(255, 0, 0, 0)', width: 1 }),
+        }),
+        text: createTextStyle(feature),
     });
-  }
-  
-  const createTextStyle = function (feature) {
+}
+
+const createTextStyle = function (feature) {
     return new Text(
-      { text: feature.get('name'), scale: 1.5 }
+        { text: feature.get('name'), scale: 1.5 }
     )
-  }
-  
-  const l3 = new VectorLayer({
+}
+
+const l3 = new VectorLayer({
     source: new VectorSource({
-      url: '/point.geojson',
-      format: new GeoJSON(),
+        url: '/point.geojson',
+        format: new GeoJSON(),
     }),
     style: textStyleFunction,
     displayInLayerSwitcher: false,
-  });
-  
-  // Polygons
-  function polygonStyleFunction(feature, resolution) {
+});
+
+// Polygons
+function polygonStyleFunction(feature, resolution) {
     return new Style({
-      stroke: new Stroke({
-        color: 'blue',
-        width: 1,
-      }),
-      fill: new Fill({
-        color: 'rgba(0, 0, 255, 0.1)',
-      }),
+        stroke: new Stroke({
+            color: 'blue',
+            width: 1,
+        }),
+        fill: new Fill({
+            color: 'rgba(0, 0, 255, 0.1)',
+        }),
     });
-  }
-  
-  const vectorPolygons = new VectorLayer({
+}
+
+const vectorPolygons = new VectorLayer({
     source: new VectorSource({
-      url: '/poly.geojson',
-      format: new GeoJSON(),
+        url: '/poly.geojson',
+        format: new GeoJSON(),
     }),
     style: polygonStyleFunction,
-  });
-  
-  
-  useSafeOnMounted(rootE1, () => {
-  
+});
+
+
+useSafeOnMounted(rootE1, () => {
+
     const map = new Map({
-      target: 'map',
-      view: new View({
-        center: fromLonLat([139.530348, 35.687153]),
-        zoom: 18,
-        rotation: 0,
-      }),
-      moveTolerance: 3.0,
-      layers: [layer4, layer3, layer2, layer],
-      controls: defaultControl({
-        attribution: false,
-      }).extend([
-        new Attribution({
-          collapsible: false,
+        target: 'map',
+        view: new View({
+            center: fromLonLat(centerArr),
+            zoom: 18,
+            rotation: 0,
         }),
-      ]),
+        moveTolerance: 3.0,
+        layers: [layer4, layer3, layer2, layer],
+        controls: defaultControl({
+            attribution: false,
+        }).extend([
+            new Attribution({
+                collapsible: false,
+            }),
+        ]),
     });
-  
-  
+
+
     map.addLayer(l3);
     map.addLayer(vectorPolygons);
-  
-    var select = new Select({});
+
+    var select = new Select({
+        layers: [l3]
+    });
     map.addInteraction(select);
+
     const router = useRouter();
-  
-    select.getFeatures().on(['add'], function(e) {
-      console.log(e.element.values_.name);
-      router.push(`/omap/${e.element.values_.link}`);
+    select.getFeatures().on(['add'], function (e) {
+        console.log(e.element.values_.name);
+        router.push(`/omap/${e.element.values_.link}`);
     })
-  
+
     var layerPopup = new $LayerPopup({
-      collapsed: false
+        collapsed: false
     });
     map.addControl(layerPopup);
+
+});
+
+</script>
   
-  });
-  
-  </script>
-  
-  <style lang="css" scoped></style>
+<style lang="css" scoped></style>

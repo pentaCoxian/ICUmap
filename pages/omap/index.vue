@@ -101,6 +101,7 @@ const vectorPolygons = new VectorLayer({
   source: new VectorSource({
     url: '/poly.geojson',
     format: new GeoJSON(),
+    
   }),
   style: polygonStyleFunction,
 });
@@ -130,7 +131,9 @@ useSafeOnMounted(rootE1, () => {
   map.addLayer(l3);
   map.addLayer(vectorPolygons);
 
-  var select = new Select({});
+  var select = new Select({
+    layers:[l3]
+  });
   map.addInteraction(select);
   const router = useRouter();
 
