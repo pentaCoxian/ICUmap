@@ -119,30 +119,49 @@ const startPos = {
     ],
 }
 
+const metaa = {
+    'honkan': { 'floors': [], },
+    'old-d': { 'floors': [], },
+    'new-d': { 'floors': [], },
+    'workshop': { 'floors': [], },
+    'lib': {
+        'floors': {
+            'GF': '/FloorGF2023-p.png',
+            '1F': '/Floor1F2022.png',
+            '2F': '/Floor2F2022.png',
+        },
+        'lonlat': {
+            'GF': [139.53094833940336, 35.68668672737103],
+            '1F': [139.53094833940336, 35.68668672737103],
+            '2F': [139.53096833940336, 35.68680672737103],
+        },
+        'scale': {
+            'GF': 0.0000034,
+            '1F': 0.0000033,
+            '2F': 0.0000034,
+        }
+    },
+    'sci': { 'floors': [], },
+    'ilc': { 'floors': [], },
+    'erb-2': { 'floors': [], },
+    'yushima': { 'floors': [], },
+    'erb-1': { 'floors': [], },
+    'gakki': { 'floors': [], },
+    'chapel': { 'floors': [], },
+    'adb': { 'floors': [], },
+    'pe': { 'floors': [], },
+    'sports': { 'floors': [], },
+    'alumni': { 'floors': [], },
+    'troy': { 'floors': [], },
+}
+
 const route = useRoute();
 const centerArr = startPos[`${route.params.build}`];
+var id = metaa[`${route.params.build}`]['floors'];
+var lons = metaa[`${route.params.build}`]['lonlat']
+var scales = metaa[`${route.params.build}`]['scale']
 
-const layer = gsiOptVtLayer({
-    title: 'GF',
-    layers: gsiOptVtLayerExclude(['Anno']),
-    visible: true,
-    baseLayer: true
-});
-const layer2 = gsiOptVtLayer({
-    title: '1F',
-    layers: ['RdCL'],
-    visible: false,
-    baseLayer: true
-});
-const layer3 = gsiOptVtLayer({
-    title: '2F',
-    layers: gsiOptVtLayerExclude(['Anno']),
-    visible: false,
-    baseLayer: true
-});
-
-
-// Polygons
+// Labels
 function textStyleFunction(feature) {
     return new Style({
         image: new CircleStyle({
@@ -156,7 +175,7 @@ function textStyleFunction(feature) {
 
 const createTextStyle = function (feature) {
     return new Text(
-        { text: feature.get('name'), scale: 1.5 }
+        { text: feature.get('name')=='図書館'?void(0) :feature.get('name') , scale: 1.5 }
     )
 }
 
@@ -169,7 +188,7 @@ const l3 = new VectorLayer({
     displayInLayerSwitcher: false,
 });
 
-// Polygons
+// building T
 function polygonStyleFunction(feature, resolution) {
     return new Style({
         stroke: new Stroke({
@@ -182,6 +201,7 @@ function polygonStyleFunction(feature, resolution) {
     });
 }
 
+
 const vectorPolygons = new VectorLayer({
     source: new VectorSource({
         url: '/poly.geojson',
@@ -192,8 +212,60 @@ const vectorPolygons = new VectorLayer({
 });
 
 
-useSafeOnMounted(rootE1, () => {
+//base
+const layer = gsiOptVtLayer({
+    title: '1F',
+    layers: gsiOptVtLayerExclude(['Anno']),
+    visible: true,
+    baseLayer: false,
+    displayInLayerSwitcher: false,
+})
 
+useSafeOnMounted(rootE1, () => {
+    var gsiLayers = [];
+    Object.keys(id).forEach((element, index) => {
+        var commentStyle = new Style({
+            image: new Icon({
+                rotation: Math.PI / 0.974,
+                opacity: 0.75,
+                rotateWithView: true,
+                src: `${id[element]}`
+            })
+        });
+
+        const tmpLayer = new VectorLayer({
+            name: element,
+            baseLayer: true,
+            visible: element == 'GF' ? true : false,
+            updateWhileAnimating: true,
+            updateWhileInteracting: true,
+            style: new Style({
+                image: new Icon({
+                    rotation: Math.PI / 0.974,
+                    opacity: 0.5,
+                    rotateWithView: true,
+                    src: id[element]
+                })
+            }),
+            source: new VectorSource({
+                features: [
+                    new Feature({
+                        geometry: new Point(fromLonLat(lons[element]))
+                    })
+                ]
+            })
+        })
+        tmpLayer.setStyle(function (feature, resolution) {
+            commentStyle.getImage().setScale((map.getView().getResolutionForZoom(3) / resolution) * scales[element]);
+            return commentStyle;
+        })
+        tmpLayer.on(['change:visible'], function (e) { e.oldValue == false ? console.log(element) : void (0) })
+        gsiLayers.push(tmpLayer)
+    })
+
+    gsiLayers.push(layer)
+
+    //make map
     const map = new Map({
         target: 'map',
         view: new View({
@@ -202,7 +274,7 @@ useSafeOnMounted(rootE1, () => {
             rotation: 0,
         }),
         moveTolerance: 3.0,
-        layers: [ layer3, layer2, layer],
+        layers: gsiLayers.reverse(),
         controls: defaultControl({
             attribution: false,
         }).extend([
@@ -210,34 +282,6 @@ useSafeOnMounted(rootE1, () => {
                 collapsible: false,
             }),
         ]),
-    });
-
-    var commentStyle = new Style({
-        image: new Icon({
-            rotation: Math.PI / 0.974,
-            opacity: 0.5,
-            rotateWithView:true,
-            // src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(icon_svg)
-            src: '/FloorGF2023-p.png'
-        })
-    });
-
-    var vectorSource = new VectorSource({
-        features: [
-            new Feature({
-                //geometry: new Point(fromLonLat([139.53096833940336, 35.68673672737103]))
-                geometry: new Point(fromLonLat([139.53094833940336, 35.68668672737103]))
-            })
-        ]
-    });
-
-    var vectorLayer = new VectorLayer({
-        name: 'Comments',
-        updateWhileAnimating: true,
-        updateWhileInteracting: true,
-        style: commentStyle,
-        source: vectorSource,
-        displayInLayerSwitcher: false,
     });
 
     map.addLayer(l3);
@@ -250,19 +294,12 @@ useSafeOnMounted(rootE1, () => {
 
     const router = useRouter();
     select.getFeatures().on(['add'], function (e) {
-        console.log(e.element.values_.name);
         router.push(`/omap/${e.element.values_.link}`);
     })
 
-    vectorLayer.setStyle(function (feature, resolution) {
-        //commentStyle.getImage().setScale((map.getView().getResolutionForZoom(3) / resolution) * 0.000025);
-        commentStyle.getImage().setScale((map.getView().getResolutionForZoom(3) / resolution) * 0.0000034);
-        return commentStyle;
-    })
-    map.addLayer(vectorLayer);
 
     var layerPopup = new $LayerPopup({
-        collapsed: false
+        collapsed: false,
     });
     map.addControl(layerPopup);
 
