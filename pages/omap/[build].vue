@@ -4,8 +4,10 @@
             <div id="toast-simple"
                 class="flex z-50 fixed left-1/2 -translate-x-1/2 top-20 items-center justify-center w-full max-w-fit sm:p-4 px-4 py-2 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg drop-shadow-2xl space-x "
                 role="alert">
-                
-                <NuxtLink to="/omap"><div class="sm:text-base text-sm font-light text-blue-500 font-normal">Go Back To Home</div> </NuxtLink>
+
+                <NuxtLink to="/omap">
+                    <div class="sm:text-base text-sm font-light text-blue-500 font-normal">Go Back To Home</div>
+                </NuxtLink>
             </div>
             <div id="map" class="h-full grow border-black border-2"></div>
         </div>
@@ -16,20 +18,31 @@
 import Map from 'ol/Map';
 import View from 'ol/View';
 import Feature from 'ol/Feature';
-import { OSM, Vector as VectorSource } from 'ol/source.js';
+import { OSM, Vector as VectorSource, ImageStatic } from 'ol/source.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text, Icon } from 'ol/style.js';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, Projection } from 'ol/proj';
 import { Point } from 'ol/geom';
 import { Select } from 'ol/interaction'
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
+import { Tile as TileLayer, Vector as VectorLayer, Image, Layer } from 'ol/layer.js';
 import { Attribution, ScaleLine, defaults as defaultControl } from 'ol/control';
+import { composeCssTransform } from 'ol/transform';
 import { gsiOptVtLayer, gsiOptVtLayerExclude } from '@cieloazul310/ol-gsi-vt';
+import axios from 'axios';
 import '../../styles/ol.css';
 import '../../styles/ol-ext.css';
 import '../../styles/switcher.css';
 import optVtLayer from '~/composables/gsi-opt-vt';
 //import LayerSwitcher from 'ol-ext/control/LayerSwitcher';
+
+var icon_svg = await axios({
+    url: 'http://43.235.0.237/svg.svg',
+    method: 'GET',
+    responseType: 'text',
+}).then((response) => {
+    return response.data;
+});
+
 
 const { $LayerPopup } = useNuxtApp();
 const { $Popup } = useNuxtApp();
@@ -110,29 +123,24 @@ const route = useRoute();
 const centerArr = startPos[`${route.params.build}`];
 
 const layer = gsiOptVtLayer({
-    title: '1F',
+    title: 'GF',
     layers: gsiOptVtLayerExclude(['Anno']),
     visible: true,
     baseLayer: true
 });
 const layer2 = gsiOptVtLayer({
-    title: '2F',
+    title: '1F',
     layers: ['RdCL'],
     visible: false,
     baseLayer: true
 });
 const layer3 = gsiOptVtLayer({
-    title: '3F',
+    title: '2F',
     layers: gsiOptVtLayerExclude(['Anno']),
     visible: false,
     baseLayer: true
 });
-const layer4 = gsiOptVtLayer({
-    title: '4F',
-    layers: gsiOptVtLayerExclude(['Anno']),
-    visible: false,
-    baseLayer: true
-});
+
 
 // Polygons
 function textStyleFunction(feature) {
@@ -180,6 +188,7 @@ const vectorPolygons = new VectorLayer({
         format: new GeoJSON(),
     }),
     style: polygonStyleFunction,
+    displayInLayerSwitcher: false,
 });
 
 
@@ -193,7 +202,7 @@ useSafeOnMounted(rootE1, () => {
             rotation: 0,
         }),
         moveTolerance: 3.0,
-        layers: [layer4, layer3, layer2, layer],
+        layers: [ layer3, layer2, layer],
         controls: defaultControl({
             attribution: false,
         }).extend([
@@ -203,6 +212,33 @@ useSafeOnMounted(rootE1, () => {
         ]),
     });
 
+    var commentStyle = new Style({
+        image: new Icon({
+            rotation: Math.PI / 0.974,
+            opacity: 0.5,
+            rotateWithView:true,
+            // src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(icon_svg)
+            src: '/FloorGF2023-p.png'
+        })
+    });
+
+    var vectorSource = new VectorSource({
+        features: [
+            new Feature({
+                //geometry: new Point(fromLonLat([139.53096833940336, 35.68673672737103]))
+                geometry: new Point(fromLonLat([139.53094833940336, 35.68668672737103]))
+            })
+        ]
+    });
+
+    var vectorLayer = new VectorLayer({
+        name: 'Comments',
+        updateWhileAnimating: true,
+        updateWhileInteracting: true,
+        style: commentStyle,
+        source: vectorSource,
+        displayInLayerSwitcher: false,
+    });
 
     map.addLayer(l3);
     map.addLayer(vectorPolygons);
@@ -217,6 +253,13 @@ useSafeOnMounted(rootE1, () => {
         console.log(e.element.values_.name);
         router.push(`/omap/${e.element.values_.link}`);
     })
+
+    vectorLayer.setStyle(function (feature, resolution) {
+        //commentStyle.getImage().setScale((map.getView().getResolutionForZoom(3) / resolution) * 0.000025);
+        commentStyle.getImage().setScale((map.getView().getResolutionForZoom(3) / resolution) * 0.0000034);
+        return commentStyle;
+    })
+    map.addLayer(vectorLayer);
 
     var layerPopup = new $LayerPopup({
         collapsed: false
