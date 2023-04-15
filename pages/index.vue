@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>Hello world</p>
+        <div class="text-xl font-bold"><NuxtLink to="/omap">omap</NuxtLink></div>
     </div>
 </template>
 

@@ -120,15 +120,35 @@ const startPos = {
 }
 
 const metaa = {
-    'honkan': { 'floors': [], },
+    'honkan': {
+        'floors': {
+            '1F': '/data/honkan/honkan1f.png',
+            '2F': '/data/honkan/honkan2f.png',
+            '3F': '/data/honkan/honkan3f.png',
+            '4F': '/data/honkan/honkan4f.png',
+        },
+        'lonlat': {
+            '1F': [139.52967588488048, 35.68753060591862],
+            '2F': [139.52969588488048, 35.68756060591862],
+            '3F': [139.52969588488048, 35.68757060591862],
+            '4F': [139.52965088488048, 35.68756360591862],
+        },
+        'scale': {
+            '1F': 0.0000042,
+            '2F': 0.0000042,
+            '3F': 0.0000042,
+            '4F': 0.0000045,
+        },
+        'rotation': 0.494
+    },
     'old-d': { 'floors': [], },
     'new-d': { 'floors': [], },
     'workshop': { 'floors': [], },
     'lib': {
         'floors': {
-            'GF': '/FloorGF2023-p.png',
-            '1F': '/Floor1F2022.png',
-            '2F': '/Floor2F2022.png',
+            'GF': '/data/lib/FloorGF2023-p.png',
+            '1F': '/data/lib/Floor1F2022.png',
+            '2F': '/data/lib/Floor2F2022.png',
         },
         'lonlat': {
             'GF': [139.53094833940336, 35.68668672737103],
@@ -139,7 +159,8 @@ const metaa = {
             'GF': 0.0000034,
             '1F': 0.0000033,
             '2F': 0.0000034,
-        }
+        },
+        'rotation': 0.974,
     },
     'sci': { 'floors': [], },
     'ilc': { 'floors': [], },
@@ -152,15 +173,35 @@ const metaa = {
     'pe': { 'floors': [], },
     'sports': { 'floors': [], },
     'alumni': { 'floors': [], },
-    'troy': { 'floors': [], },
+    'troy': {
+        'floors': {
+            '1F': '/data/T/T1F.png',
+            '2F': '/data/T/T2F.png',
+            '3F': '/data/T/T3F.png',
+            '4F': '/data/T/T4F.png',
+        },
+        'lonlat': {
+            '1F': [139.52891452541992, 35.68781269131255],
+            '2F': [139.52875452541992, 35.68786269131255],
+            '3F': [139.52875452541992, 35.68786269131255],
+            '4F': [139.52875452541992, 35.68786269131255],
+        },
+        'scale': {
+            '1F': 0.000001,
+            '2F': 0.00000096,
+            '3F': 0.00000096,
+            '4F': 0.00000096,
+        },
+        'rotation': 0.4918
+    },
 }
 
 const route = useRoute();
 const centerArr = startPos[`${route.params.build}`];
 var id = metaa[`${route.params.build}`]['floors'];
-var lons = metaa[`${route.params.build}`]['lonlat']
-var scales = metaa[`${route.params.build}`]['scale']
-
+var lons = metaa[`${route.params.build}`]['lonlat'];
+var scales = metaa[`${route.params.build}`]['scale'];
+var rotation = metaa[`${route.params.build}`]['rotation'];
 // Labels
 function textStyleFunction(feature) {
     return new Style({
@@ -175,7 +216,7 @@ function textStyleFunction(feature) {
 
 const createTextStyle = function (feature) {
     return new Text(
-        { text: feature.get('name')=='図書館'?void(0) :feature.get('name') , scale: 1.5 }
+        { text: feature.get('link') == `${route.params.build}` ? void (0) : feature.get('name'), scale: 1.5 }
     )
 }
 
@@ -189,14 +230,15 @@ const l3 = new VectorLayer({
 });
 
 // building T
+// Polygons
 function polygonStyleFunction(feature, resolution) {
     return new Style({
         stroke: new Stroke({
-            color: 'blue',
+            color: 'orange',
             width: 1,
         }),
         fill: new Fill({
-            color: 'rgba(0, 0, 255, 0.1)',
+            color: 'rgba(255, 222, 133,0.5)',
         }),
     });
 }
@@ -226,7 +268,7 @@ useSafeOnMounted(rootE1, () => {
     Object.keys(id).forEach((element, index) => {
         var commentStyle = new Style({
             image: new Icon({
-                rotation: Math.PI / 0.974,
+                rotation: Math.PI / rotation,
                 opacity: 0.75,
                 rotateWithView: true,
                 src: `${id[element]}`
@@ -236,7 +278,7 @@ useSafeOnMounted(rootE1, () => {
         const tmpLayer = new VectorLayer({
             name: element,
             baseLayer: true,
-            visible: element == 'GF' ? true : false,
+            visible: element == (`${route.params.build}` == 'lib' ? 'GF' : '1F') ? true : false,
             updateWhileAnimating: true,
             updateWhileInteracting: true,
             style: new Style({
@@ -285,7 +327,11 @@ useSafeOnMounted(rootE1, () => {
     });
 
     map.addLayer(l3);
-    map.addLayer(vectorPolygons);
+
+    if (`${route.params.build}` != 'troy') {
+        map.addLayer(vectorPolygons);
+    }
+
 
     var select = new Select({
         layers: [l3]

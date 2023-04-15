@@ -105,11 +105,11 @@ const l3 = new VectorLayer({
 function polygonStyleFunction(feature, resolution) {
   return new Style({
     stroke: new Stroke({
-      color: 'blue',
+      color: 'orange',
       width: 1,
     }),
     fill: new Fill({
-      color: 'rgba(0, 0, 255, 0.1)',
+      color: 'rgba(255, 222, 133,0.5)',
     }),
   });
 }
@@ -202,9 +202,9 @@ useSafeOnMounted(rootE1, () => {
     source: vectorSource,
   });
 
+  map.addLayer(vectorPolygons);
 
   map.addLayer(l3);
-  map.addLayer(vectorPolygons);
 
   var select = new Select({
     layers: [l3]
