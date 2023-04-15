@@ -18,34 +18,22 @@
 import Map from 'ol/Map';
 import View from 'ol/View';
 import Feature from 'ol/Feature';
-import { OSM, Vector as VectorSource, ImageStatic } from 'ol/source.js';
+import { Vector as VectorSource, } from 'ol/source.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
 import { Circle as CircleStyle, Fill, Stroke, Style, Text, Icon } from 'ol/style.js';
-import { fromLonLat, Projection } from 'ol/proj';
+import { fromLonLat, } from 'ol/proj';
 import { Point } from 'ol/geom';
 import { Select } from 'ol/interaction'
-import { Tile as TileLayer, Vector as VectorLayer, Image, Layer } from 'ol/layer.js';
-import { Attribution, ScaleLine, defaults as defaultControl } from 'ol/control';
-import { composeCssTransform } from 'ol/transform';
+import { Vector as VectorLayer, } from 'ol/layer.js';
+import { Attribution, defaults as defaultControl } from 'ol/control';
 import { gsiOptVtLayer, gsiOptVtLayerExclude } from '@cieloazul310/ol-gsi-vt';
-import axios from 'axios';
 import '../../styles/ol.css';
 import '../../styles/ol-ext.css';
 import '../../styles/switcher.css';
-import optVtLayer from '~/composables/gsi-opt-vt';
 //import LayerSwitcher from 'ol-ext/control/LayerSwitcher';
-
-var icon_svg = await axios({
-    url: 'http://43.235.0.237/svg.svg',
-    method: 'GET',
-    responseType: 'text',
-}).then((response) => {
-    return response.data;
-});
 
 
 const { $LayerPopup } = useNuxtApp();
-const { $Popup } = useNuxtApp();
 const rootE1 = ref();
 
 const startPos = {
@@ -166,8 +154,35 @@ const metaa = {
     'ilc': { 'floors': [], },
     'erb-2': { 'floors': [], },
     'yushima': { 'floors': [], },
-    'erb-1': { 'floors': [], },
-    'gakki': { 'floors': [], },
+    'erb-1': { 'floors': {
+            '1F': '/data/erb/ERB1f.png',
+            '2F': '/data/erb/ERB2f.png',
+            '3F': '/data/erb/ERB3f.png',
+        },
+        'lonlat': {
+            '1F': [139.53094161908522, 35.68762517777832],
+            '2F': [139.53094161908522, 35.68766017777832],
+            '3F': [139.53094161908522, 35.68762517777832],
+        },
+        'scale': {
+            '1F': 0.00000235,
+            '2F': 0.00000235,
+            '3F': 0.00000235,
+        },
+        'rotation': 0.4955 },
+    'gakki': { 'floors': {
+            '1F': '/data/g/gakki1f.png',
+            '2F': '/data/g/gakki2f.png',
+        },
+        'lonlat': {
+            '1F': [139.52962767686504, 35.68539692455619],
+            '2F': [139.52958767686504, 35.68532692455619],
+        },
+        'scale': {
+            '1F': 0.00000343,
+            '2F': 0.0000026,
+        },
+        'rotation': 0.468 },
     'chapel': { 'floors': [], },
     'adb': { 'floors': [], },
     'pe': { 'floors': [], },
@@ -254,16 +269,19 @@ const vectorPolygons = new VectorLayer({
 });
 
 
-//base
-const layer = gsiOptVtLayer({
-    title: '1F',
-    layers: gsiOptVtLayerExclude(['Anno']),
-    visible: true,
-    baseLayer: false,
-    displayInLayerSwitcher: false,
-})
+
 
 useSafeOnMounted(rootE1, () => {
+
+    //base
+    const layer = gsiOptVtLayer({
+        title: '1F',
+        layers: gsiOptVtLayerExclude(['Anno']),
+        visible: true,
+        baseLayer: false,
+        displayInLayerSwitcher: false,
+    })
+
     var gsiLayers = [];
     Object.keys(id).forEach((element, index) => {
         var commentStyle = new Style({

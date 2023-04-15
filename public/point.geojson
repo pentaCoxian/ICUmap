@@ -19,7 +19,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "旧D館",
+                "name": "旧D館-未実装",
                 "link": "old-d"
             },
             "geometry": {
@@ -34,7 +34,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "新D館",
+                "name": "新D館-未実装",
                 "link": "new-d"
             },
             "geometry": {
@@ -49,7 +49,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ワーショ",
+                "name": "ワーショ-未実装",
                 "link": "workshop"
             },
             "geometry": {
@@ -79,7 +79,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "理学館",
+                "name": "理学館-サ終",
                 "link": "sci"
             },
             "geometry": {
@@ -94,7 +94,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ILC",
+                "name": "ILC-未実装",
                 "link": "ilc"
             },
             "geometry": {
@@ -109,7 +109,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ERB II",
+                "name": "ERB II-未実装",
                 "link": "erb-2"
             },
             "geometry": {
@@ -124,7 +124,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "湯島八郎記念館",
+                "name": "湯島八郎記念館-未実装",
                 "link": "yushima"
             },
             "geometry": {
@@ -139,7 +139,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ERB",
+                "name": "ERB-未実装",
                 "link": "erb-1"
             },
             "geometry": {
@@ -169,7 +169,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ICU教会",
+                "name": "ICU教会-未実装",
                 "link": "chapel"
             },
             "geometry": {
@@ -184,7 +184,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "本部棟",
+                "name": "本部棟-未実装",
                 "link": "adb"
             },
             "geometry": {
@@ -199,7 +199,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "体育館",
+                "name": "体育館-未実装",
                 "link": "pe"
             },
             "geometry": {
@@ -214,7 +214,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "sports clubhouse",
+                "name": "sports clubhouse-未実装",
                 "link": "sports"
             },
             "geometry": {
@@ -229,7 +229,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "アラムナイハウス",
+                "name": "アラムナイハウス-未実装",
                 "link": "alumni"
             },
             "geometry": {
