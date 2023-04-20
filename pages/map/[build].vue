@@ -5,7 +5,7 @@
                 class="flex z-50 fixed left-1/2 -translate-x-1/2 top-20 items-center justify-center w-full max-w-fit sm:p-4 px-4 py-2 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg drop-shadow-2xl space-x "
                 role="alert">
 
-                <NuxtLink to="/omap">
+                <NuxtLink to="/map">
                     <div class="sm:text-base text-sm font-light text-blue-500 font-normal">Go Back To Home</div>
                 </NuxtLink>
             </div>
@@ -89,13 +89,17 @@ const startPos = {
         139.53229988004696,
         35.6868085585538
     ],
-    'pe': [
-        139.53239152516062,
+    'peA': [
+        139.53240152516062,
+        35.6855981191544
+    ],
+    'peB': [
+        139.53289152516062,
         35.6856981191544
     ],
     'sports': [
-        139.53291067048764,
-        35.68549626685625
+        139.53351067048764,
+        35.68545626685625
     ],
     'alumni': [
         139.53213387533236,
@@ -154,7 +158,8 @@ const metaa = {
     'ilc': { 'floors': [], },
     'erb-2': { 'floors': [], },
     'yushima': { 'floors': [], },
-    'erb-1': { 'floors': {
+    'erb-1': {
+        'floors': {
             '1F': '/data/erb/ERB1f.png',
             '2F': '/data/erb/ERB2f.png',
             '3F': '/data/erb/ERB3f.png',
@@ -169,8 +174,10 @@ const metaa = {
             '2F': 0.00000235,
             '3F': 0.00000235,
         },
-        'rotation': 0.4955 },
-    'gakki': { 'floors': {
+        'rotation': 0.4955
+    },
+    'gakki': {
+        'floors': {
             '1F': '/data/g/gakki1f.png',
             '2F': '/data/g/gakki2f.png',
         },
@@ -182,11 +189,69 @@ const metaa = {
             '1F': 0.00000343,
             '2F': 0.0000026,
         },
-        'rotation': 0.468 },
+        'rotation': 0.468
+    },
     'chapel': { 'floors': [], },
-    'adb': { 'floors': [], },
-    'pe': { 'floors': [], },
-    'sports': { 'floors': [], },
+    'adb': {
+        'floors': {
+            '1F': '/data/ad/ad1f.png',
+            '2F': '/data/ad/ad2f.png',
+        },
+        'lonlat': {
+            '1F': [139.53234988004696, 35.6869585585538],
+            '2F': [139.5323568004696, 35.6869405585538],
+        },
+        'scale': {
+            '1F': 0.00000313,
+            '2F': 0.00000313,
+        },
+        'rotation': 0.4935
+    },
+    'peA': {
+        'floors': {
+            '1F': '/data/pe/pecA1f.png',
+            '2F': '/data/pe/pecA2f.png',
+        },
+        'lonlat': {
+            '1F': [139.53222552516062, 35.6854381191544],
+            '2F': [139.53220752516062, 35.6854451191544],
+        },
+        'scale': {
+            '1F': 0.000005,
+            '2F': 0.000005,
+        },
+        'rotation': 0.3365
+    },
+    'peB': {
+        'floors': {
+            '1F': '/data/pe/pecBC1f.png',
+            '2F': '/data/pe/pecBC2f.png',
+        },
+        'lonlat': {
+            '1F': [139.53290052516062, 35.6856681191544],
+            '2F': [139.53292552516062, 35.6856595191544],
+        },
+        'scale': {
+            '1F': 0.00000393,
+            '2F': 0.00000393,
+        },
+        'rotation': 0.5085
+    },
+    'sports':{
+        'floors': {
+            '1F': '/data/pe/club1f.png',
+            '2F': '/data/pe/club2f.png',
+        },
+        'lonlat': {
+            '1F': [139.53353067048764, 35.68539516685625],
+            '2F': [139.53351067048764, 35.68545626685625],
+        },
+        'scale': {
+            '1F': 0.0000028,
+            '2F': 0.00000393,
+        },
+        'rotation': 0.682
+    },
     'alumni': { 'floors': [], },
     'troy': {
         'floors': {
@@ -358,7 +423,7 @@ useSafeOnMounted(rootE1, () => {
 
     const router = useRouter();
     select.getFeatures().on(['add'], function (e) {
-        router.push(`/omap/${e.element.values_.link}`);
+        router.push(`/map/${e.element.values_.link}`);
     })
 
 

@@ -1,98 +1,163 @@
 <template>
-    <div class="grow mt-8 mb-4">
-        <div class="container mx-auto h-full" ref="rootE1">
-            <div id="map" class="h-full grow border-black border-2"></div>
-        </div>
+  <div class="grow mt-0 mb-4">
+    <div class="container mx-auto h-full" ref="rootE1">
+      <div id="map" class="h-full grow border-black border-2"></div>
     </div>
+  </div>
 </template>
 
 <script setup>
 
-useHead(
-    {
-        link: [
-            { rel: "stylesheet", href: "https://unpkg.com/leaflet@1.9.3/dist/leaflet.css", integrity: "sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=", crossorigin: "" },
-        ],
-        script: [
-            { src: "https://unpkg.com/leaflet@1.9.3/dist/leaflet.js", integrity: "sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=", crossorigin: "" },
-            { src: "https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js" }
-        ]
+import Map from 'ol/Map';
+import View from 'ol/View';
+import { Vector as VectorSource, } from 'ol/source.js';
+import GeoJSON from 'ol/format/GeoJSON.js';
+import { Circle as CircleStyle, Fill, Stroke, Style, Text } from 'ol/style.js';
+import { fromLonLat, Projection } from 'ol/proj';
+import { Select } from 'ol/interaction'
+import { Vector as VectorLayer, } from 'ol/layer.js';
+import { Attribution, defaults as defaultControl } from 'ol/control';
+import { gsiOptVtLayer, gsiOptVtLayerExclude } from '@cieloazul310/ol-gsi-vt';
+import '../../styles/ol.css';
+import '../../styles/ol-ext.css';
+import '../../styles/switcher.css';
 
-    }
 
-);
-var options = {
-    maxZoom: 20,
-    minZoom: 17
+//import LayerSwitcher from 'ol-ext/control/LayerSwitcher';
+const rootE1 = ref();
+
+
+// Polygons
+function textStyleFunction(feature) {
+  return new Style({
+    image: new CircleStyle({
+      radius: 20,
+      fill: new Fill({ color: 'rgba(255, 0, 0, 0)' }),
+      stroke: new Stroke({ color: 'rgba(255, 0, 0, 0)', width: 1 }),
+    }),
+    text: createTextStyle(feature),
+  });
 }
 
-const rootE1 = ref()
+const createTextStyle = function (feature) {
+  return new Text(
+    { text: feature.get('name'), scale: 1.5, }
+  )
+}
+
+const l3 = new VectorLayer({
+  source: new VectorSource({
+    url: '/point.geojson',
+    format: new GeoJSON(),
+  }),
+  style: textStyleFunction,
+  displayInLayerSwitcher: false,
+});
+
+
+// Polygons
+function polygonStyleFunction(feature, resolution) {
+  return new Style({
+    stroke: new Stroke({
+      color: 'orange',
+      width: 1,
+    }),
+    fill: new Fill({
+      color: 'rgba(255, 222, 133,0.5)',
+    }),
+  });
+}
+
+const vectorPolygons = new VectorLayer({
+  source: new VectorSource({
+    url: '/poly.geojson',
+    format: new GeoJSON(),
+
+  }),
+  style: polygonStyleFunction,
+  displayInLayerSwitcher: false,
+});
+
+
+var extent = [
+  139.509396, 35.695916,
+  139.547358, 35.667192
+];
+
+extent = [
+  35.695916, 139.509396,
+  35.667192, 139.547358
+]
+
+const extentespg = [
+  4258860.177200441, 15530114.945861055,
+  4254923.606765767, 15534340.834106652,
+]
+
+
 useSafeOnMounted(rootE1, () => {
-    var map = L.map('map',options).setView([35.687153, 139.530348], 16);
+  const layer = gsiOptVtLayer({
+    title: '1F',
+    layers: gsiOptVtLayerExclude(['Anno']),
+    visible: true,
+    baseLayer: true,
+  });
+  const layer2 = gsiOptVtLayer({
+    title: '2F',
+    layers: ['RdCL'],
+    visible: false,
+    baseLayer: true
+  });
+  const layer3 = gsiOptVtLayer({
+    title: '3F',
+    layers: gsiOptVtLayerExclude(['Anno']),
+    visible: false,
+    baseLayer: true
+  });
+  const layer4 = gsiOptVtLayer({
+    title: '4F',
+    layers: gsiOptVtLayerExclude(['Anno']),
+    visible: false,
+    baseLayer: true
+  });
+  const map = new Map({
+    target: 'map',
+    view: new View({
+      center: fromLonLat([139.530348, 35.687153]),
+      zoom: 18,
+      rotation: 0,
+    }),
+    moveTolerance: 3.0,
+    layers: [layer4, layer3, layer2, layer],
+    controls: defaultControl({
+      attribution: false,
+    }).extend([
+      new Attribution({
+        collapsible: false,
+      }),
+    ]),
+  });
 
-    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
-        attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
-        renderFactory: L.canvas.tile,
-        maxNativeZoom: 18,
-        minNativeZoom: 18,
-        maxZoom: 20,
-        vectorTileLayerStyles: {
-            label: []
-        },
-    }).addTo(map);
 
-    // var map = L.map('map').setView([35.687153, 139.530348], 16);
 
-    // L.vectorGrid
-    //     .protobuf(
-    //         "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pbf",
-    //         {
-    //             attribution:
-    //                 "<a href='https://github.com/gsi-cyberjapan/gsimaps-vector-experiment' target='_blank'>国土地理院ベクトルタイル提供実験</a>",
-    //             rendererFactory: L.canvas.tile,
-    //             // maxNativeZoom: 16,
-    //             // minNativeZoom: 16,
-    //             // maxZoom: 20,
-    //             // 各レイヤーのスタイル設定
-    //             vectorTileLayerStyles: {
-    //                 // road: {
-    //                 //     color: "gray",
-    //                 //     weight: 1,
-    //                 // },
-    //                 // railway: [],
-    //                 // river: {
-    //                 //     color: "dodgerblue",
-    //                 //     weight: 1,
-    //                 // },
-    //                 // lake: [],
-    //                 // // 表示しないレイヤー
-    //                 // boundary: [],
-    //                 // building: {
-    //                 //     color: "black",
-    //                 //     weight: 1,
-    //                 // },
-    //                 // coastline: [],
-    //                 // contour: [],
-    //                 // elevation: [],
-    //                 // label: [],
-    //                 // landforma: [],
-    //                 // landforml: [],
-    //                 // landformp: [],
-    //                 // searoute: [],
-    //                 // structurea: [],
-    //                 // structurel: [],
-    //                 // symbol: [],
-    //                 // transp: [],
-    //                 // waterarea: [],
-    //                 // wstructurea: [],
-    //             },
-    //         }
-    //     )
-    //     .addTo(map);
 
-    
+  map.addLayer(vectorPolygons);
 
-})
+  map.addLayer(l3);
+
+  var select = new Select({
+    layers: [l3]
+  });
+  map.addInteraction(select);
+  const router = useRouter();
+
+  select.getFeatures().on(['add'], function (e) {
+    console.log(e.element.values_.name);
+    router.push(`/map/${e.element.values_.link}`);
+  })
+
+});
+
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped></style>

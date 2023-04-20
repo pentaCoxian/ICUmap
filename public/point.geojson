@@ -19,7 +19,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "旧D館-未実装",
+                "name": "(旧D館)",
                 "link": "old-d"
             },
             "geometry": {
@@ -34,7 +34,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "新D館-未実装",
+                "name": "(新D館)",
                 "link": "new-d"
             },
             "geometry": {
@@ -49,7 +49,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ワーショ-未実装",
+                "name": "(ワーショ)",
                 "link": "workshop"
             },
             "geometry": {
@@ -94,7 +94,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ILC-未実装",
+                "name": "(ILC)",
                 "link": "ilc"
             },
             "geometry": {
@@ -109,7 +109,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ERB II-未実装",
+                "name": "(ERB II)",
                 "link": "erb-2"
             },
             "geometry": {
@@ -124,7 +124,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "湯島八郎記念館-未実装",
+                "name": "(湯浅八郎記念館)",
                 "link": "yushima"
             },
             "geometry": {
@@ -134,12 +134,12 @@
                 ],
                 "type": "Point"
             },
-            "id": 8
+            "id": 21
         },
         {
             "type": "Feature",
             "properties": {
-                "name": "ERB-未実装",
+                "name": "ERB",
                 "link": "erb-1"
             },
             "geometry": {
@@ -169,7 +169,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "ICU教会-未実装",
+                "name": "(ICU教会)",
                 "link": "chapel"
             },
             "geometry": {
@@ -184,7 +184,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "本部棟-未実装",
+                "name": "本部棟",
                 "link": "adb"
             },
             "geometry": {
@@ -199,13 +199,13 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "体育館-未実装",
-                "link": "pe"
+                "name": "PEC-A",
+                "link": "peA"
             },
             "geometry": {
                 "coordinates": [
-                    139.53239152516062,
-                    35.6856981191544
+                    139.53240152516062,
+                    35.6855981191544
                 ],
                 "type": "Point"
             },
@@ -214,13 +214,28 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "sports clubhouse-未実装",
+                "name": "PEC-B/C",
+                "link": "peB"
+            },
+            "geometry": {
+                "coordinates": [
+                    139.53289152516062,
+                    35.6856981191544
+                ],
+                "type": "Point"
+            },
+            "id": 16
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "sports clubhouse",
                 "link": "sports"
             },
             "geometry": {
                 "coordinates": [
-                    139.53291067048764,
-                    35.68549626685625
+                    139.53351067048764,
+                    35.68545626685625
                 ],
                 "type": "Point"
             },
@@ -229,7 +244,7 @@
         {
             "type": "Feature",
             "properties": {
-                "name": "アラムナイハウス-未実装",
+                "name": "(アラムナイハウス)",
                 "link": "alumni"
             },
             "geometry": {
