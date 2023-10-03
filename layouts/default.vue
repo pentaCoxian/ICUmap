@@ -1,17 +1,10 @@
 <template>
     <div class="flex flex-col">
-        <div class="py-4 border-black border-b-0.5">
-            <div class="ml-8 flex gap-4 items-center">
-                <NuxtLink to="/map"><div class="text-xl">⚓ICUのmap</div></NuxtLink>
-                <div class="text-rg ml-4">ラベル押すと詳細出るよ</div>
-                <!-- <NuxtLink to="/">Home</NuxtLink>
-                <NuxtLink to="/map">map</NuxtLink>
-                <NuxtLink to="/omap">ol</NuxtLink> -->
-            </div>
+        <div class="flex flex-row sticky top-0 z-50">
+            <div class="ml-5 my-auto text-xl md:text-2xl font-semilight underline "><NuxtLink to="/" class="bg-black text-white p-1">ICUMAP.com</NuxtLink></div>
+            <div class="flex ml-5 text-lg my-4 font-semibold leading-4">Made<br> By<br>Pentacoxian</div>
         </div>
-
         <slot />
-
     </div>
 </template>
 
@@ -19,4 +12,10 @@
 
 </script>
 
-<style lang="scss" scoped></style>
+<style  scoped>
+    body {
+      font-family: "Inter" ;
+      font-weight: "bold";
+      font-size: 'large';
+    }
+</style>

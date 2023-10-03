@@ -1,5 +1,5 @@
 <template>
-    <div class="grow mt-0 sm:mb-4 mb-0">
+    <div class="grow mt-0 sm:mb-16 mb-0">
         <div class="container mx-auto h-full" ref="rootE1">
             <div id="toast-simple"
                 class="flex z-50 fixed left-1/2 -translate-x-1/2 top-20 items-center justify-center w-full max-w-fit sm:p-4 px-4 py-2 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg drop-shadow-2xl space-x "
@@ -237,7 +237,7 @@ const metaa = {
         },
         'rotation': 0.5085
     },
-    'sports':{
+    'sports': {
         'floors': {
             '1F': '/data/pe/club1f.png',
             '2F': '/data/pe/club2f.png',
@@ -295,9 +295,14 @@ function textStyleFunction(feature) {
 }
 
 const createTextStyle = function (feature) {
-    return new Text(
-        { text: feature.get('link') == `${route.params.build}` ? void (0) : feature.get('name'), scale: 1.5 }
-    )
+    return new Text({
+        text: feature.get('link') == `${route.params.build}` ? void (0) : feature.get('name'),
+        scale: 1.5,
+        font: 'bold 16px ' + 'Inter',
+        overflow: true,
+        fill: new Fill({ color: 'rgba(255, 255, 255, 255)' }),
+        stroke: new Stroke({ color: 'rgba(0, 0, 0, 255)', width: 1 }),
+     })
 }
 
 const l3 = new VectorLayer({
@@ -314,11 +319,11 @@ const l3 = new VectorLayer({
 function polygonStyleFunction(feature, resolution) {
     return new Style({
         stroke: new Stroke({
-            color: 'orange',
+            color: '#176B87',
             width: 1,
         }),
         fill: new Fill({
-            color: 'rgba(255, 222, 133,0.5)',
+            color: '#8ECDDD',
         }),
     });
 }
@@ -333,7 +338,54 @@ const vectorPolygons = new VectorLayer({
     displayInLayerSwitcher: false,
 });
 
-
+const palette = {
+  // anno: {
+  //   green: '#557',
+  //   terrain: '#557',
+  //   text: {
+  //     main: '#fff',
+  //     light: '#fff',
+  //   },
+  // },
+  background: '#fff',
+  building: {
+    fill: '#8ECDDD',
+    stroke: '#176B87',
+  },
+  contour: {
+    main: '#cdcdcd',
+    light: '#cdcdcd',
+  },
+  rail: {
+    station: {
+      main: '#99f',
+      light: '#ccf',
+    },
+  },
+  road: {
+    highway: {
+      main: '#fff',
+      edge: '#fff',
+    },
+    national: {
+      main: '#ccf',
+      edge: '#bbf',
+    },
+    pref: {
+      main: '#ddf',
+      edge: '#bbc',
+    },
+    basic: {
+      main: '#dcdcdc',
+      edge: '#bbc',
+    },
+    edge: '#bbc',
+  },
+  transp: {
+    highway: '#44a',
+  },
+  waterarea: '#aaf',
+};
 
 
 useSafeOnMounted(rootE1, () => {
@@ -341,6 +393,7 @@ useSafeOnMounted(rootE1, () => {
     //base
     const layer = gsiOptVtLayer({
         title: '1F',
+        theme: {palette},
         layers: gsiOptVtLayerExclude(['Anno']),
         visible: true,
         baseLayer: false,
@@ -409,11 +462,14 @@ useSafeOnMounted(rootE1, () => {
         ]),
     });
 
-    map.addLayer(l3);
 
     if (`${route.params.build}` != 'troy') {
         map.addLayer(vectorPolygons);
     }
+    
+    map.addLayer(l3);
+
+
 
 
     var select = new Select({
@@ -431,6 +487,67 @@ useSafeOnMounted(rootE1, () => {
         collapsed: false,
     });
     map.addControl(layerPopup);
+
+    const viewdef = new View({
+        center: fromLonLat([139.530348, 35.687153]),
+        zoom: 18,
+        rotation: 0,
+    });
+
+    const geolocation = new Geolocation({
+        trackingOptions: {
+            enableHighAccuracy: true,
+        },
+        projection: viewdef.getProjection()
+    });
+    function el(id) {
+        return document.getElementById(id);
+    }
+
+    el('track').addEventListener('change', function () {
+        geolocation.setTracking(this.checked);
+    });
+
+    geolocation.on('error', function (error) {
+        const info = document.getElementById('info');
+        info.innerHTML = error.message;
+        info.style.display = '';
+    });
+
+    const accuracyFeature = new Feature();
+    geolocation.on('change:accuracyGeometry', function () {
+        accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+    });
+
+    const positionFeature = new Feature();
+    positionFeature.setStyle(
+        new Style({
+            image: new CircleStyle({
+                radius: 6,
+                fill: new Fill({
+                    color: '#3399CC',
+                }),
+                stroke: new Stroke({
+                    color: '#fff',
+                    width: 2,
+                }),
+            }),
+        })
+    );
+
+    geolocation.on('change:position', function () {
+        const coordinates = geolocation.getPosition();
+        positionFeature.setGeometry(coordinates ? new Point(coordinates) : null);
+    });
+
+    const geolol = new VectorLayer({
+        source: new VectorSource({
+            features: [accuracyFeature, positionFeature],
+        }),
+        displayInLayerSwitcher: false,
+    });
+
+    map.addLayer(geolol);
 
 });
 
