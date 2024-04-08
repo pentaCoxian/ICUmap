@@ -2,7 +2,7 @@
     <div class="grow mt-0 sm:mb-16 mb-0">
         <div class="container mx-auto h-full" ref="rootE1">
             <div id="toast-simple"
-                class="flex z-50 fixed left-1/2 -translate-x-1/2 top-20 items-center justify-center w-full max-w-fit sm:p-4 px-4 py-2 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg drop-shadow-2xl space-x "
+                class="flex z-50 fixed left-1/2 -translate-x-1/2 top-20 mt-4 items-center justify-center w-full max-w-fit sm:p-2 border-blue border-2 px-4 py-2 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg drop-shadow-2xl space-x "
                 role="alert">
 
                 <NuxtLink to="/map">
