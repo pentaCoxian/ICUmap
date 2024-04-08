@@ -41,7 +41,8 @@ const rootE1 = ref();
 useHead({
   title: 'ICU MAP 構内図',
   meta: [
-    { name: 'description', content: '国際基督教大学の構内図。各館の詳細もみれます。' }
+    { name: 'description', content: '国際基督教大学の構内図。各館の詳細もみれます。' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'}
   ]
 })
 useSeoMeta({
