@@ -1,7 +1,7 @@
 <template>
   <div class="grow mt-0 sm:mb-4">
     <div class="container mx-auto h-full" ref="rootE1">
-      <div id="map" class="h-full grow border-black border-2"></div>
+      <div id="map" class="h-full grow"></div>
     </div>
     <div class="container relative h-32 w-32">
       <div class="flex fixed left-1/2 bottom-10 bg-white border-2 p-2 justify-center m-2 z-50 ">
@@ -55,9 +55,9 @@ useSeoMeta({
 function textStyleFunction(feature) {
   return new Style({
     image: new CircleStyle({
-      radius: 20,
-      fill: new Fill({ color: 'rgba(255, 255, 255, 0)' }),
-      stroke: new Stroke({ color: 'rgba(255, 255, 255, 0)', width: 1 }),
+      radius: 4,
+      fill: new Fill({ color: 'rgba(50, 100, 255, 255)' }),
+      stroke: new Stroke({ color: 'rgba(255, 255, 255, 255)', width: 3 }),
     }),
     text: createTextStyle(feature),
   });
@@ -67,6 +67,7 @@ const createTextStyle = function (feature) {
   return new Text({
     text: feature.get('name'),
     scale: 1.5,
+    offsetY: -15,
     font: '10px sans-serif',
     overflow: true,
     backgroundFill: new Fill({ color: 'rgba(255, 255, 255, 200)' }),

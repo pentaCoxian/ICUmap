@@ -9,7 +9,7 @@
                     <div class="sm:text-base text-sm font-light text-blue-500 font-normal">Go Back To Home</div>
                 </NuxtLink>
             </div>
-            <div id="map" class="h-full grow border-black border-2"></div>
+            <div id="map" class="h-full grow"></div>
         </div>
     </div>
 </template>
@@ -303,9 +303,9 @@ var rotation = metaa[`${route.params.build}`]['rotation'];
 function textStyleFunction(feature) {
     return new Style({
         image: new CircleStyle({
-            radius: 19,
-            fill: new Fill({ color: 'rgba(255, 0, 0, 0)' }),
-            stroke: new Stroke({ color: 'rgba(255, 0, 0, 0)', width: 1 }),
+            radius: feature.get('link') == `${route.params.build}` ? 0 : 5,
+            fill: new Fill({ color: 'rgba(0, 140, 255, 255)' }),
+            stroke: new Stroke({ color: 'rgba(255, 255, 255, 255)', width: 1 }),
         }),
         text: createTextStyle(feature),
     });
@@ -315,6 +315,7 @@ const createTextStyle = function (feature) {
     return new Text({
         text: feature.get('link') == `${route.params.build}` ? void (0) : feature.get('name'),
         scale: 1.5,
+        offsetY: -15,
         font: '10px sans-serif',
         overflow: true,
         backgroundFill: new Fill({ color: 'rgba(255, 255, 255, 200)' }),
