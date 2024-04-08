@@ -55,9 +55,9 @@ useSeoMeta({
 function textStyleFunction(feature) {
   return new Style({
     image: new CircleStyle({
-      radius: 4,
-      fill: new Fill({ color: 'rgba(50, 100, 255, 255)' }),
-      stroke: new Stroke({ color: 'rgba(255, 255, 255, 255)', width: 3 }),
+      radius: 5,
+      fill: new Fill({ color: 'rgba(0, 140, 255, 255)' }),
+      stroke: new Stroke({ color: 'rgba(255, 255, 255, 255)', width: 1 }),
     }),
     text: createTextStyle(feature),
   });
