@@ -1510,7 +1510,7 @@ body>.ol-ext-dialog>form {
 .ol-layerswitcher-popup li {
     color: #369;
     padding: .25em 1em;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: Helvetica, sans-serif;
     cursor: pointer
 }
 
@@ -2555,7 +2555,7 @@ ul.ol-legend li div {
     text-align: center;
     width: 160%;
     overflow: hidden;
-    font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     -webkit-transform: scaleX(.625);
     transform: scaleX(.625);
     -webkit-transform-origin: 0 0;
@@ -3215,12 +3215,10 @@ ul.ol-legend li div {
         opacity: 0;
         top: 0
     }
-
     80% {
         opacity: 1;
         top: -3em
     }
-
     100% {
         opacity: 0;
         top: -3em
@@ -3232,12 +3230,10 @@ ul.ol-legend li div {
         opacity: 0;
         top: 0
     }
-
     80% {
         opacity: 1;
         top: -3em
     }
-
     100% {
         opacity: 0;
         top: -3em
@@ -3249,22 +3245,18 @@ ul.ol-legend li div {
         margin: 0 !important;
         padding: 0 !important
     }
-
     body.ol-print-document>* {
         display: none !important
     }
-
     body.ol-print-document>.ol-ext-print-dialog {
         display: block !important
     }
-
     body.ol-print-document>.ol-ext-print-dialog .ol-content {
         max-height: unset !important;
         max-width: unset !important;
         width: unset !important;
         height: unset !important
     }
-
     .ol-ext-print-dialog,
     .ol-ext-print-dialog>form {
         position: unset;
@@ -3273,26 +3265,22 @@ ul.ol-legend li div {
         background: 0 0 !important;
         border: 0
     }
-
     .ol-ext-print-dialog .ol-print-param,
     .ol-ext-print-dialog>form>* {
         display: none !important;
         background: 0 0
     }
-
     .ol-ext-print-dialog .ol-content {
         display: block !important;
         border: 0;
         background: 0 0
     }
-
     .ol-ext-print-dialog .ol-print-map {
         position: unset;
         background: 0 0;
         width: auto;
         overflow: visible
     }
-
     .ol-ext-print-dialog .ol-print-map .ol-page {
         -webkit-transform: none !important;
         transform: none !important;
@@ -3306,11 +3294,9 @@ ul.ol-legend li div {
     .ol-ext-print-dialog .ol-print-param {
         width: 13em
     }
-
     .ol-ext-print-dialog .ol-print-map {
         width: calc(100% - 13em)
     }
-
     .ol-ext-print-dialog .ol-print-param .ol-print-title input[type=text] {
         width: 100%;
         margin: 0
@@ -3529,24 +3515,20 @@ ul.ol-legend li div {
 }
 
 @-webkit-keyframes ol-progress-bar-blink {
-
     0%,
     30% {
         visibility: hidden
     }
-
     100% {
         visibility: visible
     }
 }
 
 @keyframes ol-progress-bar-blink {
-
     0%,
     30% {
         visibility: hidden
     }
-
     100% {
         visibility: visible
     }
@@ -3943,12 +3925,10 @@ ul.ol-legend li div {
         left: 0;
         right: 95%
     }
-
     50% {
         left: 30%;
         right: 30%
     }
-
     100% {
         left: 95%;
         right: 0
@@ -3960,12 +3940,10 @@ ul.ol-legend li div {
         left: 0;
         right: 95%
     }
-
     50% {
         left: 30%;
         right: 30%
     }
-
     100% {
         left: 95%;
         right: 0
@@ -4460,7 +4438,6 @@ ul.ol-legend li div {
     from {
         top: -.2em
     }
-
     to {
         top: .5em
     }
@@ -4470,7 +4447,6 @@ ul.ol-legend li div {
     from {
         top: -.2em
     }
-
     to {
         top: .5em
     }
@@ -4480,7 +4456,6 @@ ul.ol-legend li div {
     from {
         bottom: -.2em
     }
-
     to {
         bottom: .5em
     }
@@ -4490,7 +4465,6 @@ ul.ol-legend li div {
     from {
         bottom: -.2em
     }
-
     to {
         bottom: .5em
     }
@@ -5532,17 +5506,14 @@ ul.ol-legend li div {
         -webkit-transform: scale(0);
         transform: scale(0)
     }
-
     50% {
         -webkit-transform: scale(1.1);
         transform: scale(1.1)
     }
-
     80% {
         -webkit-transform: scale(.95);
         transform: scale(.95)
     }
-
     to {
         -webkit-transform: scale(1);
         transform: scale(1)
@@ -5554,17 +5525,14 @@ ul.ol-legend li div {
         -webkit-transform: scale(0);
         transform: scale(0)
     }
-
     50% {
         -webkit-transform: scale(1.1);
         transform: scale(1.1)
     }
-
     80% {
         -webkit-transform: scale(.95);
         transform: scale(.95)
     }
-
     to {
         -webkit-transform: scale(1);
         transform: scale(1)

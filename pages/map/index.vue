@@ -67,10 +67,11 @@ const createTextStyle = function (feature) {
   return new Text({
     text: feature.get('name'),
     scale: 1.5,
-    font: 'bold 8px ' + 'Inter',
+    font: '10px sans-serif',
     overflow: true,
-    fill: new Fill({ color: 'rgba(255, 255, 255, 255)' }),
-    stroke: new Stroke({ color: 'rgba(0, 0, 0, 255)', width: 1 }),
+    backgroundFill: new Fill({ color: 'rgba(255, 255, 255, 200)' }),
+    fill: new Fill({ color: 'rgba(0, 0, 0, 255)' }),
+    stroke: new Stroke({ color: 'rgba(0, 0, 0, 0)', width: 1 }),
   }
   )
 }
